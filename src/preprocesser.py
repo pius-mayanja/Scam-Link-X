@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+import joblib
 
 
 # Load Data
@@ -27,4 +28,6 @@ def preprocess_data(df):
     X, y = df.drop(columns=['label']), df['label']
     scaler = StandardScaler()
     X[X.select_dtypes(include=['int64', 'float64']).columns] = scaler.fit_transform(X.select_dtypes(include=['int64', 'float64']))
+    
+    joblib.dump(scaler, 'scaler.joblib')
     return X, y
