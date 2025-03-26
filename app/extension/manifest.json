@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Phishing Detection",
+    "version": "1.0",
+    "description": "Detect phishing links using a Flask API.",
+    "permissions": [
+      "activeTab"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ]
+}
+  

@@ -4,7 +4,7 @@ import requests
 url = "http://127.0.0.1:5000/predict"
 
 # Example URL to test
-test_url = "https://www.betpawa.ug/events/popular?marketId=1X2&categoryId=2"
+test_url = "https://wa.me/message/earn"
 
 # Loop through test URLs and send requests
 response = requests.post(url, json={"Domain": test_url})
