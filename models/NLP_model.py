@@ -26,16 +26,22 @@ def extract_features(url):
     url = str(url)
     parsed_url = urlparse(url)
     return pd.Series({
-        'url_length': len(url),
-        'num_special_chars': sum(1 for c in url if c in "/-?=.:"),
-        'has_ip': 1 if re.search(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b', url) else 0,
-        'has_at_symbol': 1 if '@' in url else 0,
-        'has_dash': 1 if '-' in url else 0,
-        'path_length': len(parsed_url.path),
-        'query_length': len(parsed_url.query),
-        'fragment_length': len(parsed_url.fragment),
-        'has_https': 1 if parsed_url.scheme == 'https' else 0,
-        'domain_length': len(parsed_url.netloc)
+        'URL_Length': len(url),
+        'tiny_url': 1 if len(url) < 15 else 0,
+        'Protocol': 1 if parsed_url.scheme == 'https' else 0,
+        'Redirection_//_symbol': 1 if '//' in url else 0,
+        'Sub_domains': url.count('.') - 1,  # Subdomain count based on dots
+        'Domain': parsed_url.netloc.split('.')[-2] if parsed_url.netloc else '',
+        'age_domain': 1 if parsed_url.netloc.split('.')[-1] in ['com', 'net', 'org'] else 0,  # Simplified check
+        'dns_record': 1 if parsed_url.netloc else 0,  # Just checking if there is a domain
+        'domain_registration_length': len(parsed_url.netloc.split('.')[-1]) if parsed_url.netloc else 0,
+        'http_tokens': 1 if 'http' in url else 0,  # Checking for "http" in the URL
+        'Prefix_suffix_separation': 1 if '-' in url else 0,
+        'Having_@_symbol': 1 if '@' in url else 0,
+        'Having_IP': 1 if re.search(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b', url) else 0,
+        'Path': len(parsed_url.path),
+        'statistical_report': 0,  # Dummy value, implement your logic if necessary
+        'web_traffic': 0,  # Set a default value for web_traffic (you can improve this logic if needed)
     })
 
 # Apply feature extraction
